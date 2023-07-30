@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS users (
+  id uuid,
+  name VARCHAR(64) NOT NULL,
+  last_name VARCHAR(64) NOT NULL,
+  phone VARCHAR(32) NOT NULL,
+  country_phone_code VARCHAR(8) NOT NULL,
+  email VARCHAR(128) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+  PRIMARY KEY (id)
+);
