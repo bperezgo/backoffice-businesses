@@ -2,21 +2,21 @@ package handler
 
 import "github.com/bperezgo/backoffice-businesses/shared/platform/handlertypes"
 
-type BasisHandler struct {
+type BasisHandler[T any] struct {
 	HandlerMethod HandlerMethod
 	Path          string
-	BasisBody     interface{}
+	BasisBody     T
 }
 
-func (h *BasisHandler) GetMethod() HandlerMethod {
+func (h *BasisHandler[T]) GetMethod() HandlerMethod {
 	return h.HandlerMethod
 }
 
-func (h *BasisHandler) GetPath() string {
+func (h *BasisHandler[T]) GetPath() string {
 	return h.Path
 }
 
-func (h *BasisHandler) GetEmptyRequest() handlertypes.Request {
+func (h *BasisHandler[T]) GetEmptyRequest() handlertypes.Request {
 	return handlertypes.Request{
 		Body: h.BasisBody,
 	}

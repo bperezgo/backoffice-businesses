@@ -1,6 +1,8 @@
 package middlewares
 
 import (
+	"context"
+
 	"github.com/bperezgo/backoffice-businesses/shared/platform/handler"
 	"github.com/bperezgo/backoffice-businesses/shared/platform/handlertypes"
 	"github.com/bperezgo/backoffice-businesses/shared/platform/logger"
@@ -26,7 +28,7 @@ func (h *LoggerMiddleware) GetPath() string {
 	return h.handler.GetPath()
 }
 
-func (h *LoggerMiddleware) Function(req handlertypes.Request) handlertypes.Response {
+func (h *LoggerMiddleware) Function(ctx context.Context, req handlertypes.Request) handlertypes.Response {
 	h.logger.Info(logger.LogInput{
 		Action: "REQUEST",
 		State:  logger.SUCCESS,
@@ -36,7 +38,7 @@ func (h *LoggerMiddleware) Function(req handlertypes.Request) handlertypes.Respo
 		Meta: req.Meta,
 	})
 
-	res := h.handler.Function(req)
+	res := h.handler.Function(ctx, req)
 
 	h.logger.Info(logger.LogInput{
 		Action: "RESPONSE",

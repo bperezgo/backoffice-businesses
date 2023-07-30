@@ -1,6 +1,10 @@
 package handler
 
-import "github.com/bperezgo/backoffice-businesses/shared/platform/handlertypes"
+import (
+	"context"
+
+	"github.com/bperezgo/backoffice-businesses/shared/platform/handlertypes"
+)
 
 type HandlerMethod int64
 
@@ -42,7 +46,7 @@ type Function func(req handlertypes.Request) (res handlertypes.Response)
 type Handler interface {
 	GetMethod() HandlerMethod
 	GetPath() string
-	Function(req handlertypes.Request) (res handlertypes.Response)
+	Function(ctx context.Context, req handlertypes.Request) (res handlertypes.Response)
 	GetEmptyRequest() handlertypes.Request
 }
 

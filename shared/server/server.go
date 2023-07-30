@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/bperezgo/backoffice-businesses/shared/platform/handler"
 	"github.com/bperezgo/backoffice-businesses/shared/platform/middlewares"
@@ -17,7 +18,12 @@ type Server struct {
 func NewServer(handlers ...handler.Handler) *Server {
 	r := gin.Default()
 
-	r.Use(gin.Recovery())
+	r.Use(gin.CustomRecovery(func(c *gin.Context, recovered any) {
+		if err, ok := recovered.(string); ok {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("error: %s", err))
+		}
+		c.AbortWithStatus(http.StatusInternalServerError)
+	}))
 
 	defineGinHandlers(r, handlers)
 

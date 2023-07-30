@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/bperezgo/backoffice-businesses/shared/platform/handler"
@@ -13,12 +14,12 @@ type GetHealthResponse struct {
 }
 
 type GetHealthHandler struct {
-	handler.BasisHandler
+	handler.BasisHandler[interface{}]
 }
 
 func NewGetHealthHandler() *GetHealthHandler {
 	return &GetHealthHandler{
-		BasisHandler: handler.BasisHandler{
+		BasisHandler: handler.BasisHandler[interface{}]{
 			HandlerMethod: handler.GET,
 			Path:          "/health",
 			BasisBody:     nil,
@@ -26,7 +27,7 @@ func NewGetHealthHandler() *GetHealthHandler {
 	}
 }
 
-func (h *GetHealthHandler) Function(req handlertypes.Request) handlertypes.Response {
+func (h *GetHealthHandler) Function(ctx context.Context, req handlertypes.Request) handlertypes.Response {
 	return handlertypes.Response{
 		Body: GetHealthResponse{
 			Message: "Server is up and running",

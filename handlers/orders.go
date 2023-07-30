@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/bperezgo/backoffice-businesses/shared/platform/handler"
@@ -17,12 +18,12 @@ type CreateOrderRequest struct {
 }
 
 type CreateOrderHandler struct {
-	handler.BasisHandler
+	handler.BasisHandler[CreateOrderRequest]
 }
 
 func NewCreateOrderHandler() *CreateOrderHandler {
 	return &CreateOrderHandler{
-		BasisHandler: handler.BasisHandler{
+		BasisHandler: handler.BasisHandler[CreateOrderRequest]{
 			HandlerMethod: handler.POST,
 			Path:          "/orders",
 			BasisBody:     CreateOrderRequest{},
@@ -30,7 +31,7 @@ func NewCreateOrderHandler() *CreateOrderHandler {
 	}
 }
 
-func (h *CreateOrderHandler) Function(req handlertypes.Request) handlertypes.Response {
+func (h *CreateOrderHandler) Function(ctx context.Context, req handlertypes.Request) handlertypes.Response {
 	return handlertypes.Response{
 		Body: CreateOrderResponse{
 			Message: "Order created",

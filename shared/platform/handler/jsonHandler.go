@@ -54,7 +54,7 @@ func (h *JsonHandler) Adapt(handler Handler) func(c *gin.Context) {
 			}
 
 			request.Headers = headers
-			response := handler.Function(request)
+			response := handler.Function(c, request)
 
 			c.JSON(http.StatusOK, response.Body)
 
@@ -63,7 +63,7 @@ func (h *JsonHandler) Adapt(handler Handler) func(c *gin.Context) {
 
 		if method == GET {
 			// TODO: Get query params
-			response := handler.Function(request)
+			response := handler.Function(c, request)
 
 			c.JSON(http.StatusOK, response.Body)
 			return

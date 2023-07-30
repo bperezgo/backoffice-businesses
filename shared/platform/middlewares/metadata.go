@@ -1,6 +1,8 @@
 package middlewares
 
 import (
+	"context"
+
 	"github.com/bperezgo/backoffice-businesses/shared/platform/handler"
 	"github.com/bperezgo/backoffice-businesses/shared/platform/handlertypes"
 	"github.com/google/uuid"
@@ -24,12 +26,12 @@ func (h *MetadataMiddleware) GetPath() string {
 	return h.handler.GetPath()
 }
 
-func (h *MetadataMiddleware) Function(req handlertypes.Request) handlertypes.Response {
+func (h *MetadataMiddleware) Function(ctx context.Context, req handlertypes.Request) handlertypes.Response {
 	req.Meta = &handlertypes.Meta{
 		RequestId: uuid.NewString(),
 	}
 
-	return h.handler.Function(req)
+	return h.handler.Function(ctx, req)
 }
 
 func (h *MetadataMiddleware) GetEmptyRequest() handlertypes.Request {
