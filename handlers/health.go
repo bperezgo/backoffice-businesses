@@ -10,7 +10,7 @@ import (
 
 type GetHealthResponse struct {
 	Message string `json:"message"`
-	handler.BaseHandler
+	handler.BasisHandler[interface{}]
 }
 
 type GetHealthHandler struct {

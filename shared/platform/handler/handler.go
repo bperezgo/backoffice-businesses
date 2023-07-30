@@ -49,9 +49,3 @@ type Handler interface {
 	Function(ctx context.Context, req handlertypes.Request) (res handlertypes.Response)
 	GetEmptyRequest() handlertypes.Request
 }
-
-type BaseHandler struct{}
-
-func (h *BaseHandler) GetEmptyRequest() handlertypes.Request {
-	return handlertypes.Request{}
-}

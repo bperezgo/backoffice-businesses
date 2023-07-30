@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/bperezgo/backoffice-businesses/services"
@@ -37,6 +38,14 @@ func NewCreateUserHandler(userService *services.UserService) *CreateUserHandler 
 }
 
 func (h *CreateUserHandler) Function(ctx context.Context, req handlertypes.Request) handlertypes.Response {
+	userBody, ok := req.Body.(CreateUserRequest)
+	if !ok {
+		return handlertypes.Response{
+			Body:       nil,
+			HttpStatus: http.StatusBadRequest,
+		}
+	}
+	fmt.Println(userBody.Email)
 	err := h.userService.Create(ctx)
 	if err != nil {
 		return handlertypes.Response{
