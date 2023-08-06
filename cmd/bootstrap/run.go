@@ -1,4 +1,4 @@
-package main
+package bootstrap
 
 import (
 	"log"
@@ -11,7 +11,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func run() error {
+func Run() error {
 	err := config.InitConfig()
 	if err != nil {
 		log.Fatal("error loading .env file", err)
