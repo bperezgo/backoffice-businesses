@@ -58,6 +58,6 @@ func (h *JsonHandler) Adapt(handler Handler) func(c *gin.Context) {
 		request.Headers = headers
 		response := handler.Function(c, request)
 
-		c.JSON(http.StatusOK, response.Body)
+		c.JSON(response.HttpStatus, response.Body)
 	}
 }

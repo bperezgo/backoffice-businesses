@@ -46,7 +46,9 @@ func (h *CreateUserHandler) Function(ctx context.Context, req handlertypes.Reque
 
 	if err != nil {
 		return handlertypes.Response{
-			Body:       nil,
+			Body: CreateUserResponse{
+				Message: "Invalid request body",
+			},
 			HttpStatus: http.StatusBadRequest,
 		}
 	}
@@ -54,7 +56,7 @@ func (h *CreateUserHandler) Function(ctx context.Context, req handlertypes.Reque
 	err = handler.Validator(&user)
 	if err != nil {
 		return handlertypes.Response{
-			Body:       nil,
+			Body:       CreateUserResponse{Message: err.Error()},
 			HttpStatus: http.StatusBadRequest,
 		}
 	}
