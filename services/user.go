@@ -17,7 +17,6 @@ func NewUserService(userRepository ports.UserRepository) *UserService {
 	}
 }
 
-func (s *UserService) Create(ctx context.Context) error {
-	userModel := models.User{}
-	return s.userRepository.Save(ctx, userModel)
+func (s *UserService) Create(ctx context.Context, user models.User) error {
+	return s.userRepository.Save(ctx, user)
 }

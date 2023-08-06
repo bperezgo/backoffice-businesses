@@ -18,6 +18,6 @@ func (h *BasisHandler[T]) GetPath() string {
 
 func (h *BasisHandler[T]) GetEmptyRequest() handlertypes.Request {
 	return handlertypes.Request{
-		Body: h.BasisBody,
+		Body: []byte{},
 	}
 }

@@ -3,6 +3,7 @@ module github.com/bperezgo/backoffice-businesses
 go 1.20
 
 require (
+	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
 	github.com/gin-gonic/gin v1.9.1
 	github.com/google/uuid v1.3.0
 	github.com/jmoiron/sqlx v1.3.5
