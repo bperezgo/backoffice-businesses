@@ -19,7 +19,8 @@ func NewServer(handlers ...handler.Handler) *Server {
 	r := gin.Default()
 
 	r.Use(gin.CustomRecovery(func(c *gin.Context, recovered any) {
-		if err, ok := recovered.(string); ok {
+		err, ok := recovered.(string)
+		if ok {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("error: %s", err))
 		}
 		c.AbortWithStatus(http.StatusInternalServerError)

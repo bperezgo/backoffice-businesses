@@ -22,10 +22,17 @@ func NewPostgresUserRepository(db *sqlx.DB) *PostgresUserRepository {
 }
 
 func (r *PostgresUserRepository) Save(ctx context.Context, user models.User) error {
-	_, err := r.db.Query("INSERT INTO users (id, country_phone_code, email) VALUES ($1, $2, $3)",
+	_, err := r.db.Query(`
+	INSERT INTO users (id, country_phone_code, email, name, last_name, phone, created_at, updated_at) 
+	VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
 		user.ID,
 		user.CountryPhoneCode,
 		user.Email,
+		user.Name,
+		user.LastName,
+		user.Phone,
+		user.CreatedAt,
+		user.UpdatedAt,
 	)
 
 	if err != nil {

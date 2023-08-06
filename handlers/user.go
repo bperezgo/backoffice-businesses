@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"encoding/json"
 	"net/http"
 	"time"
 
@@ -15,6 +14,7 @@ import (
 
 type CreateUserResponse struct {
 	Message string `json:"message"`
+	ID      string `json:"id"`
 }
 
 type CreateUserRequest struct {
@@ -37,34 +37,28 @@ func NewCreateUserHandler(userService *services.UserService) *CreateUserHandler 
 			Path:          "/users",
 			BasisBody:     CreateUserRequest{},
 		},
+		userService: userService,
 	}
 }
 
 func (h *CreateUserHandler) Function(ctx context.Context, req handlertypes.Request) handlertypes.Response {
 	user := CreateUserRequest{}
-	err := json.Unmarshal(req.Body, &user)
+	err := h.BasisHandler.ValidateAndDecode(&user, req.Body)
 
 	if err != nil {
 		return handlertypes.Response{
 			Body: CreateUserResponse{
-				Message: "Invalid request body",
+				Message: err.Error(),
 			},
 			HttpStatus: http.StatusBadRequest,
 		}
 	}
 
-	err = handler.Validator(&user)
-	if err != nil {
-		return handlertypes.Response{
-			Body:       CreateUserResponse{Message: err.Error()},
-			HttpStatus: http.StatusBadRequest,
-		}
-	}
-
 	nowTime := time.Now()
+	userId := uuid.NewString()
 
 	userModel := models.User{
-		ID:               uuid.NewString(),
+		ID:               userId,
 		Email:            user.Email,
 		Phone:            user.Phone,
 		CountryPhoneCode: user.CountryPhoneCode,
@@ -77,14 +71,17 @@ func (h *CreateUserHandler) Function(ctx context.Context, req handlertypes.Reque
 	err = h.userService.Create(ctx, userModel)
 	if err != nil {
 		return handlertypes.Response{
-			Body:       nil,
+			Body: CreateUserResponse{
+				Message: err.Error(),
+			},
 			HttpStatus: http.StatusBadRequest,
 		}
 	}
 
 	return handlertypes.Response{
-		Body: CreateOrderResponse{
+		Body: CreateUserResponse{
 			Message: "User created",
+			ID:      userId,
 		},
 		HttpStatus: http.StatusCreated,
 	}
