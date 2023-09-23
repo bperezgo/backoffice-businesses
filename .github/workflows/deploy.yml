@@ -6,7 +6,7 @@ on:
       - 'releases/**'
 
 env:
-  ECR_REPOSITORY: ECR_REPOSITORY_NAME           # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: backoffice
   ECS_SERVICE: ECS_SERVICE                 # set this to your Amazon ECS service name
   ECS_CLUSTER: ECS_CLUSTER                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
